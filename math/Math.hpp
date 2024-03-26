@@ -24,11 +24,17 @@ public:
 	}
 	template <typename T>
 	static T	floor(T const &a) {
-		
+		if (a < 0)
+			return ((int)a - 1);
+		return (int)a;
 	}
 	template <typename T>
 	static T	round(T const &a) {
 		return (Math::ceil(a + T(-0.5)));
+	}
+	template <typename T>
+	static T	ceil(T const &a) {
+		return (-Math::floor(a));
 	}
 	template <typename T, typename U, typename V>
 	static Number	area(T const &a, U const &b, V const &c) {
