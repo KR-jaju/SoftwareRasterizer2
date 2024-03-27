@@ -1,11 +1,11 @@
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CXXFLAGS = -Wall -Wextra -Werror -std=c++11 -g
 SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 NAME = software_rasterizer
 
 %.o : %.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $< -I./math -I./graphics
+	$(CXX) $(CXXFLAGS) -c -o $@ $< -I./include
 
 all : $(NAME)
 

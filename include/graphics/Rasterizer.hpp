@@ -16,9 +16,9 @@ public:
 		// 1. w로 나눔 -> ndc를 얻음
 		// 2. ndc -> viewport space
 		// for문을 돌면서 fragcoord를 만듬.
-		Vector2 const	v0_screen = viewport.transform(v0.position);
-		Vector2 const	v1_screen = viewport.transform(v1.position);
-		Vector2 const	v2_screen = viewport.transform(v2.position);
+		Vector2 const	v0_screen = viewport.transform(v0.getPosition());
+		Vector2 const	v1_screen = viewport.transform(v1.getPosition());
+		Vector2 const	v2_screen = viewport.transform(v2.getPosition());
 		uint64_t const	x_min = Math::max(Math::round(Math::min(v0_screen.x, v1_screen.x, v2_screen.x)), viewport.x_min);
 		uint64_t const	x_max = Math::min(Math::round(Math::max(v0_screen.x, v1_screen.x, v2_screen.x)), viewport.x_max);
 		uint64_t const	y_min = Math::max(Math::round(Math::min(v0_screen.y, v1_screen.y, v2_screen.y)), viewport.y_min);
@@ -32,7 +32,7 @@ public:
 				Number const	&w = 1 - u - v;
 				if (0 <= u && u <= 1 && v <= 0 && v <= 1 && 0 <= w && w <= 1) {
 					F const	&fragment = Math::lerp(v0, v1, v2, u, v, w);
-					if (!out->depthTest(x, y, fragment.position.z))
+					if (!out.depthTest(x, y, fragment.getPosition().z))
 						continue;
 					out.write(x, y, shader.frag(fragment));
 				}

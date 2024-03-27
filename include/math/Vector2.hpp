@@ -7,6 +7,7 @@
 struct Vector2 {
 	Number	x;
 	Number	y;
+	Vector2(Number x, Number y): x(x), y(y) {}
 };
 
 #endif

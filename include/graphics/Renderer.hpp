@@ -20,21 +20,17 @@ public:
 		std::deque<F>	vertices;
 
 		for (int64_t i = 0; i + 3 < size; i += 3) {
-			vertices.push(shader.vert(in[i]));
-			vertices.push(shader.vert(in[i + 1]));
-			vertices.push(shader.vert(in[i + 2]));
+			vertices.push_back(shader.vert(in[i]));
+			vertices.push_back(shader.vert(in[i + 1]));
+			vertices.push_back(shader.vert(in[i + 2]));
 			
 			Clipper::clip(vertices);
-			std::deque<F>::iterator	it = vertices.begin();
 			if (vertices.size() < 3)
 				continue; // #E
-			for (std::deque<F>::iterator it = vertices.begin(); it != vertices.end(); ++it) {
-				Vector4	&position = it->position;
-				position.w = Number(1) / position.w;
-				position.x *= position.w;
-				position.y *= position.w;
-				position.z *= position.w;
+			for (typename std::deque<F>::iterator it = vertices.begin(); it != vertices.end(); ++it) {
+				it->perspectiveDivide();
 			} // perspetive division
+			typename std::deque<F>::iterator	it = vertices.begin();
 			F const	&v0 = *it;
 			++it;
 			while (it + 1 != vertices.end()) {

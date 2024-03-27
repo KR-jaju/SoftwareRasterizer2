@@ -3,7 +3,6 @@
 # define RENDER_INPUT_HPP
 
 # include <cstdint>
-# include <math/Vector4.hpp>
 
 template <typename I>
 class RenderInput {

@@ -1,9 +1,9 @@
 
-#include "Renderer.hpp"
+#include <graphics/Renderer.hpp>
 #include "Triangle.hpp"
 #include "RenderTexture.hpp"
 #include "LambertDiffuse.hpp"
-#include "Viewport.hpp"
+#include <graphics/Viewport.hpp>
 #include <iostream>
 
 int	main(void) {

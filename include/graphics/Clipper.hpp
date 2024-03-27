@@ -18,17 +18,20 @@ public:
 private:
 	template <typename F>
 	static bool	isInside(F const &a, Vector4 const &axis) {
-		Number const	w = a.position.w;
-		Number const	v = Vector4::dot(a.position, axis); // 
+		Vector4 const	&position = a.getPosition();
+		Number const	w = position.w;
+		Number const	v = Vector4::dot(position, axis); // 
 		return (v <= w);
 	}
 	// (a.x + (b.x - a.x) * t) / (a.w + (b.w - a.w) * t) = 1.0
 	template <typename F>
 	static F	interpolate(F const &a, F const &b, Vector4 const &axis) {
-		Number const	p = Vector4::dot(a.position, axis);
-		Number const	q = Vector4::dot(b.position, axis); // b.position의 특정 축
-		Number const	r = p - a.position.w;
-		Number const	s = q - b.position.w;
+		Vector4 const	&a_position = a.getPosition();
+		Vector4 const	&b_position = b.getPosition();
+		Number const	p = Vector4::dot(a_position, axis);
+		Number const	q = Vector4::dot(b_position, axis); // b_position의 특정 축
+		Number const	r = p - a_position.w;
+		Number const	s = q - b_position.w;
 		Number const	t = r / (r - s);
 
 		return (Math::lerp(a, b, t));
@@ -36,15 +39,13 @@ private:
 	template <typename F>
 	static void	clipSide(std::deque<F> &queue, Vector4 const &axis) {
 		int const	count = static_cast<int>(queue.size());
-		F			curr;
-		F			prev;
 		if (count <= 2)
 			return ; // #E
-		curr = queue.front();
+		F	curr = queue.front();
 		queue.pop_front();
 		queue.push_back(curr);
 		for (int i = 0; i < count; ++i) {
-			prev = curr;
+			F	prev = curr;
 			curr = queue.front();
 			queue.pop_front();
 			F	intersection = Clipper::interpolate(prev, curr, axis);
