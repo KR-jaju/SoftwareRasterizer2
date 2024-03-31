@@ -12,6 +12,7 @@ public:
 	virtual T	operator*(Number const &other) const = 0;
 	virtual Vector4 const	&getPosition(void) const = 0;
 	virtual void	perspectiveDivide(void) = 0;
+	virtual		~Fragment() {}
 };
 
 #endif
