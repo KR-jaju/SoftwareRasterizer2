@@ -28,9 +28,9 @@ public:
 		for (uint64_t y = y_min; y <= y_max; ++y) {
 			for (uint64_t x = x_min; x <= x_max; ++x) {
 				Number const	&u = Math::area(v1_screen, v2_screen, Vector2(x, y)) / area;
-				Number const	&v = Math::area(v1_screen, v2_screen, Vector2(x, y)) / area;
+				Number const	&v = Math::area(v2_screen, v0_screen, Vector2(x, y)) / area;
 				Number const	&w = 1 - u - v;
-				if (0 <= u && u <= 1 && v <= 0 && v <= 1 && 0 <= w && w <= 1) {
+				if (0 <= u && u <= 1 && 0 <= v && v <= 1 && 0 <= w && w <= 1) {
 					F const	&fragment = Math::lerp(v0, v1, v2, u, v, w);
 					if (!out.depthTest(x, y, fragment.getPosition().z))
 						continue;
