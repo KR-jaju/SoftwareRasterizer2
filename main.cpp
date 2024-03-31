@@ -7,15 +7,16 @@
 #include <iostream>
 
 int	main(void) {
-	Viewport		viewport(0, 0, 128, 128);
+	int const	size = 64;
+	Viewport		viewport(0, 0, size, size);
 	Triangle		in;
 	LambertDiffuse	shader;
-	RenderTexture	out(128, 128);
+	RenderTexture	out(size, size);
 	
 	Renderer::draw(in, shader, out, viewport);
 
-	for (int y = 0; y < 128; ++y) {
-		for (int x = 0; x < 128; ++x) {
+	for (int y = 0; y < size; ++y) {
+		for (int x = 0; x < size; ++x) {
 			if (out.get(x, y).x > 0.5) {
 				std::cout << "#";
 			} else {
