@@ -6,23 +6,38 @@
 #include <graphics/Viewport.hpp>
 #include <iostream>
 
+#include <SDL2/SDL.h>
+
+// int const	width = 1280;
+// int const	height = 720;
+int const	width = 640;
+int const	height = 360;
+
 int	main(void) {
-	int const	size = 64;
-	Viewport		viewport(0, 0, size, size);
+	Viewport		viewport(0, 0, width, height);
 	Triangle		in;
 	LambertDiffuse	shader;
-	RenderTexture	out(size, size);
-	
-	Renderer::draw(in, shader, out, viewport);
+	RenderTexture	out(width, height);
 
-	for (int y = 0; y < size; ++y) {
-		for (int x = 0; x < size; ++x) {
-			if (out.get(x, y).x > 0.5) {
-				std::cout << "#";
-			} else {
-				std::cout << " ";
-			}
+	SDL_Window* window = SDL_CreateWindow("SDL pixels", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    SDL_Texture* pixels = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_STREAMING, width, height);
+	
+	while (true) {
+		SDL_Event	event;
+	
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_QUIT)
+				return (EXIT_SUCCESS);
 		}
-		std::cout << '\n';
+		void	*data;
+		int		pitch;
+		SDL_LockTexture(pixels, NULL, &data, &pitch);
+		out.setTarget(data);
+		Renderer::draw(in, shader, out, viewport);
+		SDL_UnlockTexture(pixels);
+		SDL_RenderCopy(renderer, pixels, NULL, NULL);
+        SDL_RenderPresent(renderer);
 	}
+
 }
