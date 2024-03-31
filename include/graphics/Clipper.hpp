@@ -24,6 +24,7 @@ private:
 		return (v <= w);
 	}
 	// (a.x + (b.x - a.x) * t) / (a.w + (b.w - a.w) * t) = 1.0
+	// 에서 유도됨.
 	template <typename F>
 	static F	interpolate(F const &a, F const &b, Vector4 const &axis) {
 		Vector4 const	&a_position = a.getPosition();
@@ -41,9 +42,7 @@ private:
 		int const	count = static_cast<int>(queue.size());
 		if (count <= 2)
 			return ; // #E
-		F	curr = queue.front();
-		queue.pop_front();
-		queue.push_back(curr);
+		F	curr = queue.back();
 		for (int i = 0; i < count; ++i) {
 			F	prev = curr;
 			curr = queue.front();
