@@ -35,6 +35,14 @@ public:
 		return Math::max(a, Math::max(args...));
 	} 
 	template <typename T>
+	static T	clamp(T const &a, T const &min, T const &max) {
+		if (a < min)
+			return (min);
+		else if (a > max)
+			return (max);
+		return (a);
+	}
+	template <typename T>
 	static T	floor(T const &a) {
 		if (a < 0)
 			return (int64_t(a) - 1);
