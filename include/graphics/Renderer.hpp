@@ -19,7 +19,7 @@ public:
 		int64_t const	size = in.size();
 		std::deque<F>	vertices;
 
-		for (int64_t i = 0; i + 3 < size; i += 3) {
+		for (int64_t i = 0; i + 3 <= size; i += 3) {
 			vertices.push_back(shader.vert(in[i]));
 			vertices.push_back(shader.vert(in[i + 1]));
 			vertices.push_back(shader.vert(in[i + 2]));
